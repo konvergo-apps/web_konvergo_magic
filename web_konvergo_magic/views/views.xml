@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="workflow_configuration_view_tree" model="ir.ui.view">
+        <field name="name">konvergo_magic.workflow.tree</field>
+        <field name="model">konvergo_magic.workflow</field>
+        <field name="arch" type="xml">
+            <tree string="Configurations">
+                <field name="name"/>
+                <field name="workflow_id"/>
+                <field name="is_global"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="workflow_configuration_view_form" model="ir.ui.view">
+        <field name="name">konvergo_magic.workflow.form</field>
+        <field name="model">konvergo_magic.workflow</field>
+        <field name="arch" type="xml">
+            <form string="Workflows">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean" options="{'terminology': 'archive'}"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Customer Support Chat"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="workflow_id" placeholder="clg2xqo4b0001l608cxq75xba"/>
+                            <field name="instance_url" widget="url"/>
+                            <field name="include_context"/>
+                            
+                        </group>
+                        <group>
+                            <field name="is_global"/>
+                            <field name="model_ids" widget="many2many_tags" attrs="{'invisible': [('is_global', '=', True)], 'required': [('is_global', '=', False)]}"/>
+                            <field name="theme_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="workflow_configuration_view_search" model="ir.ui.view">
+        <field name="name">konvergo_magic.workflow.search</field>
+        <field name="model">konvergo_magic.workflow</field>
+        <field name="arch" type="xml">
+            <search string="Search workflows">
+                <field name="name"/>
+                <field name="workflow_id"/>
+                <filter string="Global" name="global" domain="[('is_global', '=', True)]"/>
+                <filter string="With Context" name="with_context" domain="[('include_context', '=', True)]"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_workflow_configuration" model="ir.actions.act_window">
+        <field name="name">Workflows</field>
+        <field name="res_model">konvergo_magic.workflow</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="workflow_configuration_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Integrate your first Konvergo Allo workflow
+            </p>
+            <p>
+                Configure Konvergo Allo workflows to appear in different areas of your ERP.
+            </p>
+        </field>
+    </record>
+
+    <!-- Konvergo Allo Theme Tree View -->
+    <record id="workflow_theme_view_tree" model="ir.ui.view">
+        <field name="name">konvergo_magic.workflow.theme.tree</field>
+        <field name="model">konvergo_magic.workflow.theme</field>
+        <field name="arch" type="xml">
+            <tree string="Themes">
+                <field name="name"/>
+                <field name="active"/>
+                <field name="workflow_ids"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="workflow_theme_view_form" model="ir.ui.view">
+        <field name="name">konvergo_magic.workflow.theme.form</field>
+        <field name="model">konvergo_magic.workflow.theme</field>
+        <field name="arch" type="xml">
+            <form string="Themes">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean" options="{'terminology': 'archive'}"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Konvergo"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="placement"/>
+                            <field name="chat_window_background" placeholder="#FFF"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Button">
+                            <group>
+                                <field name="button_background" placeholder="#EC0B43"/>
+                                <field name="button_size"/>
+                            </group>
+                        </page>
+                        <page string="Preview message">
+                            <group>
+                                <field name="preview_message"/>
+                            </group>
+                            <group attrs="{'invisible': [('preview_message', '!=', True)]}">
+                                <group>
+                                    <field name="preview_message_text" widget="char_emojis" attrs="{'required': [('preview_message', '=', True)]}"/>
+                                    <field name="preview_message_text_color" attrs="{'disabled': [('preview_message_text', '=', False)]}"/>
+                                    <field name="preview_message_autoshow"/>
+                                    <field name="preview_message_autoshow_seconds" attrs="{'invisible': [('preview_message_autoshow', '!=', True)], 'required': [('preview_message_autoshow', '=', True)]}"/>
+                                </group>
+                                <group>
+                                    <field name="preview_message_background" placeholder="#FAFCFE"/>
+                                    <field name="preview_message_close_button_background" placeholder="#EC0B431A"/>
+                                    <field name="preview_message_close_button_icon" placeholder="#EC0B43"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="workflow_theme_view_search" model="ir.ui.view">
+        <field name="name">konvergo_magic.workflow.theme.search</field>
+        <field name="model">konvergo_magic.workflow.theme</field>
+        <field name="arch" type="xml">
+            <search string="Search workflow themes">
+                <field name="name"/>
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_workflow_theme" model="ir.actions.act_window">
+        <field name="name">Themes</field>
+        <field name="res_model">konvergo_magic.workflow.theme</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="workflow_theme_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Konvergo Allo workflow theme
+            </p>
+        </field>
+    </record>
+
+    <record id="res_users_preferences_view_form_inherit_konvergo_magic" model="ir.ui.view">
+        <field name="name">res.users.preferences.form.inherit.konvergo.allo</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Konvergo MAGIC" name="konvergo_magic">
+                    <group>
+                        <field name="konvergo_magic_auth_token" password="True"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_workflow_root"
+        name="Konvergo MAGIC"
+        web_icon="web_konvergo_magic,static/description/icon.png"
+        sequence="80"
+        groups="base.group_system"
+    />
+
+    <menuitem
+        id="menu_workflow_configuration"
+        name="Workflows"
+        parent="menu_workflow_root"
+        action="action_workflow_configuration"
+        sequence="10"
+    />
+    <menuitem
+        id="menu_workflow_theme"
+        name="Themes"
+        parent="menu_workflow_root"
+        action="action_workflow_theme"
+        sequence="20"
+    />
+</odoo>

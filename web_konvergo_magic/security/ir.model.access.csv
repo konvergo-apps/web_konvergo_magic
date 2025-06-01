@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_konvergo_magic_workflow_system,konvergo_magic.workflow.system,model_konvergo_magic_workflow,base.group_system,1,1,1,1
+access_konvergo_magic_workflow_user,konvergo_magic.workflow.user,model_konvergo_magic_workflow,base.group_user,1,0,0,0
+access_konvergo_magic_workflow_theme_system,konvergo_magic.workflow.theme.system,model_konvergo_magic_workflow_theme,base.group_system,1,1,1,1
+access_konvergo_magic_workflow_theme_user,konvergo_magic.workflow.theme.user,model_konvergo_magic_workflow_theme,base.group_user,1,0,0,0
