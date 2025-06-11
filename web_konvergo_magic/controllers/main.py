@@ -7,7 +7,7 @@ class KonvergoMagicController(http.Controller):
     @http.route('/workflow/get_config', type='json', auth='user')
     def get_workflow_config(self, model=None, record_id=None, view_type=None):
         _log_prefix = '[KONVERGO-ALLO-API]'
-        logging.info(f"{_log_prefix} Config requested. Model: {model}, Record ID: {record_id}")
+        logging.info("%s Config requested. Model: %s, Record ID: %s" % (_log_prefix, model, record_id))
         
         WorkflowConfig = request.env['konvergo_magic.workflow']
     
@@ -16,7 +16,7 @@ class KonvergoMagicController(http.Controller):
         if model:
             config = WorkflowConfig.get_workflow_for_model(model)
             if config:
-                logging.info(f"{_log_prefix} Found specific config for model {model}: {config.name}")
+                logging.info("%s Found specific config for model %s: %s" % (_log_prefix, model, config.name))
             
         # If there is no workflow specific to the model, try to find a global one
         if not config:
@@ -25,12 +25,26 @@ class KonvergoMagicController(http.Controller):
                 ('is_global', '=', True)
             ], limit=1)
             if config:
-                logging.info(f"{_log_prefix} Found global config: {config.name}")
+                logging.info("%s Found global config: %s" % (_log_prefix, config.name))
             
         if not config:
-            logging.warning(f"{_log_prefix} No config found. Returning display=False")
+            logging.warning("%s No config found. Returning display=False" % _log_prefix)
             return {'display': False}
             
+        # Get current user's auth token
+        auth_token = None
+        if request.session.uid:
+            user = request.env['res.users'].sudo().browse(request.session.uid)
+            auth_token = user.konvergo_magic_auth_token
+            
+        # Initialize result dict first
+        result = {
+            'display': bool(config),
+            'workflow_id': config.workflow_id,
+            'instance_url': config.instance_url,
+            'auth_token': auth_token,
+        }
+        
         ###
         # Konvergo Allo bubble additional UI configuration
         ###
@@ -42,7 +56,7 @@ class KonvergoMagicController(http.Controller):
                     'placement': theme.placement,
                     'button': {
                         'backgroundColor': theme.button_background,
-                        'size': theme.button_size ,
+                        'size': theme.button_size,
                     },
                     'previewMessage': {
                         'backgroundColor': theme.preview_message_background,
@@ -62,19 +76,6 @@ class KonvergoMagicController(http.Controller):
                         'autoShowDelay': theme.preview_message_autoshow_seconds * 1000,
                     }
                 }
-                
-        # Get current user's auth token
-        auth_token = None
-        if request.session.uid:
-            user = request.env['res.users'].sudo().browse(request.session.uid)
-            auth_token = user.konvergo_magic_auth_token
-            
-        result = {
-            'display': bool(config),
-            'workflow_id': config.workflow_id,
-            'instance_url': config.instance_url,
-            'auth_token': auth_token,
-        }
 
         # Add context variables if enabled
         if config.include_context and model:
@@ -101,13 +102,13 @@ class KonvergoMagicController(http.Controller):
                     if hasattr(record, 'name'):
                         result['prefilledVariables']['erp_record_name'] = record.name
                 except Exception as e:
-                    logging.exception(f"{_log_prefix} Error getting record name: {str(e)}")
+                    logging.exception("%s Error getting record name: %s" % (_log_prefix, str(e)))
                     pass
   
-            logging.debug(f"{_log_prefix} Context variables: {result['prefilledVariables']}")
+            logging.debug("%s Context variables: %s" % (_log_prefix, result['prefilledVariables']))
         else:
-            logging.debug(f"{_log_prefix} Context variables not included. include_context: {config.include_context}, model: {model}")
+            logging.debug("%s Context variables not included. include_context: %s, model: %s" % (_log_prefix, config.include_context, model))
                
-        logging.debug(f"{_log_prefix} Returning config: {result}")
+        logging.debug("%s Returning config: %s" % (_log_prefix, result))
         return result
     

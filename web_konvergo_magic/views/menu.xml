@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        name="Konvergo MAGIC"
+        id="konvergo_magic_root_menu"
+        groups="base.group_system"
+        web_icon="web_konvergo_magic,static/description/image.png"
+        sequence="40"
+    />
+    <menuitem
+        id="menu_workflow_configuration"
+        name="Workflows"
+        parent="konvergo_magic_root_menu"
+        action="action_workflow_configuration"
+        sequence="10"
+    />
+    <menuitem
+        id="menu_workflow_theme"
+        name="Themes"
+        parent="konvergo_magic_root_menu"
+        action="action_workflow_theme"
+        sequence="20"
+    />
+</odoo>

@@ -29,6 +29,10 @@ odoo.define("web_konvergo_magic.helper", function (require) {
       return result;
     },
 
+    /**
+     * Fetch the Konvergo Allo workflow configuration for the model.
+     * @returns The object of the workflow configuration.
+     */
     loadWorkflowConfig: function () {
       var self = this;
       var context = this.getContextParameters();
@@ -54,12 +58,16 @@ odoo.define("web_konvergo_magic.helper", function (require) {
             return false;
           }
         })
-        .guardedCatch(function (error) {
+        .fail(function (error) {
           console.error("[KONVERGO-ALLO-HELPER] Error loading config:", error);
           return false;
         });
     },
 
+    /**
+     * Initializes the Konvergo Allo workflow configuration to be displayed.
+     * @param {*} config - The workflow configuration to initialize.
+     */
     initWorkflow: function (config) {
       if (!config.auth_token) {
         var message =

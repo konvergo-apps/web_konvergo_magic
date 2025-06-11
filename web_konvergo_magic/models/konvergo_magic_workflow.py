@@ -47,12 +47,11 @@ class KonvergoMagicWorkflow(models.Model):
             if self.instance_url.endswith('/'):
                 self.instance_url = self.instance_url.rstrip('/')
                 
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            if vals.get('instance_url') and vals['instance_url'].endswith('/'):
-                vals['instance_url'] = vals['instance_url'].rstrip('/')
-        return super(KonvergoMagicWorkflow, self).create(vals_list)
+    @api.model
+    def create(self, vals):
+        if vals.get('instance_url') and vals['instance_url'].endswith('/'):
+            vals['instance_url'] = vals['instance_url'].rstrip('/')
+        return super(KonvergoMagicWorkflow, self).create(vals)
         
     def write(self, vals):
         if vals.get('instance_url') and vals['instance_url'].endswith('/'):
