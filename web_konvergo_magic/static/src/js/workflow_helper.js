@@ -29,11 +29,18 @@ odoo.define("web_konvergo_magic.helper", function (require) {
       return result;
     },
 
+    /**
+     * Fetch the Konvergo Allo workflow configuration for the model.
+     * @returns The object of the workflow configuration.
+     */
     loadWorkflowConfig: function () {
       var self = this;
       var context = this.getContextParameters();
 
-      console.info("[KONVERGO-ALLO-HELPER] Getting configuration for", context);
+      console.debug(
+        "[KONVERGO-ALLO-HELPER] Getting configuration for",
+        context
+      );
 
       return ajax
         .jsonRpc("/workflow/get_config", "call", {
@@ -42,8 +49,6 @@ odoo.define("web_konvergo_magic.helper", function (require) {
           view_type: context.view_type,
         })
         .then(function (config) {
-          console.info("[KONVERGO-ALLO-HELPER] Received config:", config);
-
           if (config && config.display) {
             self.initWorkflow(config);
             return config;
@@ -60,6 +65,10 @@ odoo.define("web_konvergo_magic.helper", function (require) {
         });
     },
 
+    /**
+     * Initializes the Konvergo Allo workflow configuration to be displayed.
+     * @param {*} config - The workflow configuration to initialize.
+     */
     initWorkflow: function (config) {
       if (!config.auth_token) {
         var message =
@@ -98,7 +107,6 @@ odoo.define("web_konvergo_magic.helper", function (require) {
                             console.debug('[KONVERGO-ALLO-HELPER] Konvergo Allo loaded');
                             
                             const props = ${JSON.stringify(workflowProps)};
-                            console.info('[KONVERGO-ALLO-HELPER] Initializing with:', props);
                             
                             const instance = Workflow.initBubble(props);
                             window.workflowInstance = instance;

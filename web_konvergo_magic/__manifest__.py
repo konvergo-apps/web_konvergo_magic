@@ -5,7 +5,6 @@
     "author": "Konvergo",
     "maintainer": "Konvergo",
     "website": "https://konvergo.com",
-    "license": "LGPL-3",
     "application": True,
     "category": "Website",
     "depends": [
@@ -17,6 +16,7 @@
         "security/ir.model.access.csv",
         "views/views.xml",
         "views/templates.xml",
+        "views/menu.xml",
     ],
     "installable": True,
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="workflow_configuration_view_tree" model="ir.ui.view">
+    <record id="workflow_configuration_tree_view" model="ir.ui.view">
         <field name="name">konvergo_magic.workflow.tree</field>
         <field name="model">konvergo_magic.workflow</field>
         <field name="arch" type="xml">
@@ -13,7 +13,7 @@
         </field>
     </record>
 
-    <record id="workflow_configuration_view_form" model="ir.ui.view">
+    <record id="workflow_configuration_form_view" model="ir.ui.view">
         <field name="name">konvergo_magic.workflow.form</field>
         <field name="model">konvergo_magic.workflow</field>
         <field name="arch" type="xml">
@@ -47,7 +47,7 @@
         </field>
     </record>
 
-    <record id="workflow_configuration_view_search" model="ir.ui.view">
+    <record id="workflow_configuration_search_view" model="ir.ui.view">
         <field name="name">konvergo_magic.workflow.search</field>
         <field name="model">konvergo_magic.workflow</field>
         <field name="arch" type="xml">
@@ -66,7 +66,7 @@
         <field name="name">Workflows</field>
         <field name="res_model">konvergo_magic.workflow</field>
         <field name="view_mode">tree,form</field>
-        <field name="search_view_id" ref="workflow_configuration_view_search"/>
+        <field name="search_view_id" ref="workflow_configuration_search_view"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Integrate your first Konvergo Allo workflow
@@ -78,7 +78,7 @@
     </record>
 
     <!-- Konvergo Allo Theme Tree View -->
-    <record id="workflow_theme_view_tree" model="ir.ui.view">
+    <record id="workflow_theme_tree_view" model="ir.ui.view">
         <field name="name">konvergo_magic.workflow.theme.tree</field>
         <field name="model">konvergo_magic.workflow.theme</field>
         <field name="arch" type="xml">
@@ -90,7 +90,7 @@
         </field>
     </record>
 
-    <record id="workflow_theme_view_form" model="ir.ui.view">
+    <record id="workflow_theme_form_view" model="ir.ui.view">
         <field name="name">konvergo_magic.workflow.theme.form</field>
         <field name="model">konvergo_magic.workflow.theme</field>
         <field name="arch" type="xml">
@@ -143,7 +143,7 @@
         </field>
     </record>
 
-    <record id="workflow_theme_view_search" model="ir.ui.view">
+    <record id="workflow_theme_search_view" model="ir.ui.view">
         <field name="name">konvergo_magic.workflow.theme.search</field>
         <field name="model">konvergo_magic.workflow.theme</field>
         <field name="arch" type="xml">
@@ -159,7 +159,7 @@
         <field name="name">Themes</field>
         <field name="res_model">konvergo_magic.workflow.theme</field>
         <field name="view_mode">tree,form</field>
-        <field name="search_view_id" ref="workflow_theme_view_search"/>
+        <field name="search_view_id" ref="workflow_theme_search_view"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create your first Konvergo Allo workflow theme
@@ -167,7 +167,7 @@
         </field>
     </record>
 
-    <record id="res_users_preferences_view_form_inherit_konvergo_magic" model="ir.ui.view">
+    <record id="res_users_preferences_form_view_inherit_konvergo_magic" model="ir.ui.view">
         <field name="name">res.users.preferences.form.inherit.konvergo.allo</field>
         <field name="model">res.users</field>
         <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
@@ -181,27 +181,4 @@
             </xpath>
         </field>
     </record>
-
-    <menuitem
-        id="menu_workflow_root"
-        name="Konvergo MAGIC"
-        web_icon="web_konvergo_magic,static/description/icon.png"
-        sequence="80"
-        groups="base.group_system"
-    />
-
-    <menuitem
-        id="menu_workflow_configuration"
-        name="Workflows"
-        parent="menu_workflow_root"
-        action="action_workflow_configuration"
-        sequence="10"
-    />
-    <menuitem
-        id="menu_workflow_theme"
-        name="Themes"
-        parent="menu_workflow_root"
-        action="action_workflow_theme"
-        sequence="20"
-    />
 </odoo>
