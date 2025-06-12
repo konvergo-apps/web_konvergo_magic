@@ -10,7 +10,6 @@
     "depends": [
         "base",
         "web",
-        "website",
     ],
     "data": [
         "security/ir.model.access.csv",
