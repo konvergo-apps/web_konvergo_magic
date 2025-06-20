@@ -70,14 +70,6 @@ odoo.define("web_konvergo_magic.helper", function (require) {
      * @param {*} config - The workflow configuration to initialize.
      */
     initWorkflow: function (config) {
-      if (!config.auth_token) {
-        var message =
-          "Konvergo Allo authentication token is missing. Please set it in your user preferences.";
-        alert(message);
-        console.warn("[KONVERGO-ALLO-HELPER] " + message);
-        return;
-      }
-
       var workflowUrl = config.instance_url;
 
       var workflowProps = {
