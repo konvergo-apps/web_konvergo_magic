@@ -1,7 +1,7 @@
 {
     "name": "Konvergo MAGIC",
     "summary": "Konvergo MAGIC baseline for integration with Konvergo ERP",
-    "version": "12.0.1.0.1",
+    "version": "12.0.1.0.2",
     "author": "Konvergo",
     "maintainer": "Konvergo",
     "website": "https://konvergo.com",
